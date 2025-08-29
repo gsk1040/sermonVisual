@@ -85,7 +85,7 @@
             max-width: 900px;
             min-height: 120px;
             height: auto;
-            max-height: 40vh;
+            max-height: 70vh;
             overflow-y: auto;
             background-color: var(--dialogue-bg);
             border: 2px solid var(--border-color);
@@ -114,10 +114,12 @@
             font-weight: 700;
             color: var(--border-color);
             max-width: calc(100vw - 60px);
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            overflow: visible;
+            white-space: normal;
+            text-overflow: unset;
             box-sizing: border-box;
+            word-break: break-word;
+            height: auto;
         }
 
         #text-wrapper {
@@ -155,6 +157,12 @@
                 right: 6px;
                 padding: 7px 8px;
                 max-width: calc(100vw - 12px);
+                white-space: normal;
+                height: auto;
+                word-break: break-word;
+            }
+            #chat-wrapper {
+                max-height: 85vh;
             }
         }
         }
