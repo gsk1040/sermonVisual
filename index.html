@@ -102,24 +102,24 @@
 
         #name-box {
             position: absolute;
-            top: -30px;
-            left: 30px;
-            right: 30px;
+            top: 5vh;
+            left: 50%;
+            transform: translateX(-50%);
             background-color: var(--name-bg);
-            padding: 10px 25px;
-            border-radius: 8px 8px 0 0;
+            padding: 18px 40px;
+            border-radius: 12px;
             border: 2px solid var(--border-color);
-            border-bottom: none;
-            font-size: 1.3em;
+            font-size: 2.2em;
             font-weight: 700;
             color: var(--border-color);
-            max-width: calc(100vw - 60px);
+            max-width: 90vw;
             overflow: visible;
             white-space: normal;
             text-overflow: unset;
             box-sizing: border-box;
             word-break: break-word;
             height: auto;
+            z-index: 20;
         }
 
         #text-wrapper {
@@ -132,14 +132,16 @@
         }
 
         #text-content {
-            font-size: 1.1em;
-            line-height: 1.6;
+            font-size: 2em;
+            line-height: 1.7;
             text-align: left;
             width: calc(100% - 40px);
             word-break: break-word;
             overflow-wrap: break-word;
             max-width: 100%;
             box-sizing: border-box;
+        }
+
         @media (max-width: 600px) {
             #chat-wrapper {
                 width: 99vw;
@@ -153,15 +155,14 @@
                 transform: translate(-50%, -50%);
             }
             #text-content {
-                font-size: 1em;
-                padding: 8px 2px;
+                font-size: 1.2em;
             }
             #name-box {
-                font-size: 1em;
-                left: 6px;
-                right: 6px;
-                padding: 7px 8px;
-                max-width: calc(100vw - 12px);
+                font-size: 1.3em;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 10px 12px;
+                max-width: 96vw;
                 white-space: normal;
                 height: auto;
                 word-break: break-word;
@@ -169,7 +170,6 @@
             #chat-wrapper {
                 max-height: 85vh;
             }
-        }
         }
 
         #next-indicator {
@@ -188,8 +188,8 @@
 <body>
 
     <div id="whole-wrapper">
+        <div id="name-box">신의 RULEBOOK</div>
         <div id="chat-wrapper">
-            <div id="name-box">신의 RULEBOOK</div>
             <div id="text-wrapper">
                 <p id="text-content">여기를 클릭하여 시작하세요...</p>
                 <div id="next-indicator">&gt;</div>
