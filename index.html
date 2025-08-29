@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하나님의 법과 공동체 - 비주얼 설교</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dialogue-bg: rgba(10, 25, 47, 0.85);
+            --name-bg: #172A46;
+            --text-color: #E6F1FF;
+            --border-color: #64FFDA;
+            --font-main: 'Nanum Myeongjo', serif;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: var(--font-main);
+            background-color: #0A192F;
+            color: var(--text-color);
+            overflow: hidden;
+        }
+
+        #whole-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        /* Animated background effect */
+        #whole-wrapper::before, #whole-wrapper::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: 1;
+            filter: blur(50px);
+        }
+
+        #whole-wrapper::before {
+            width: 80vmax;
+            height: 80vmax;
+            background: radial-gradient(circle, #ffc94d 0%, rgba(255,201,77,0) 60%);
+            animation: move-glow 25s infinite alternate ease-in-out;
+        }
+
+        #whole-wrapper::after {
+            width: 60vmax;
+            height: 60vmax;
+            background: radial-gradient(circle, #a1c4fd 0%, rgba(161,196,253,0) 60%);
+            animation: move-glow-2 30s infinite alternate ease-in-out;
+        }
+
+        @keyframes move-glow {
+            from { transform: translate(-20%, -20%) scale(0.8); }
+            to { transform: translate(20%, 20%) scale(1.2); }
+        }
+        @keyframes move-glow-2 {
+            from { transform: translate(30%, -30%) scale(1.1); }
+            to { transform: translate(-30%, 30%) scale(0.9); }
+        }
+
+        /* Main container for title and dialogue */
+        #content-container {
+            position: relative;
+            width: 90vw;
+            max-width: 900px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #name-box {
+            background-color: var(--name-bg);
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--border-color);
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+        }
+
+        #chat-wrapper {
+            width: 100%;
+            min-height: 200px;
+            height: auto;
+            max-height: 60vh;
+            overflow-y: auto;
+            background-color: var(--dialogue-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #text-wrapper {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        #text-content {
+            font-size: 1.5em;
+            line-height: 1.8;
+            text-align: left;
+            width: calc(100% - 50px); /* Space for the next indicator */
+            word-break: keep-all; /* Prevents awkward word breaks */
+        }
+
+        #next-indicator {
+            font-size: 2.5em;
+            color: var(--border-color);
+            animation: blink-arrow 1.5s infinite;
+            padding-left: 10px;
+        }
+
+        @keyframes blink-arrow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            #name-box {
+                font-size: 1.3em;
+                padding: 10px 20px;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+            #chat-wrapper {
+                padding: 15px;
+                max-height: 70vh;
+            }
+            #text-content {
+                font-size: 1.1em;
+                width: calc(100% - 40px);
+            }
+            #next-indicator {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="whole-wrapper">
+        <div id="content-container">
+            <div id="name-box">신의 RULEBOOK</div>
+            <div id="chat-wrapper">
+                <div id="text-wrapper">
+                    <p id="text-content">여기를 클릭하여 시작하세요...</p>
+                    <div id="next-indicator">&gt;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sermon = [
+            // 8월 24일: 언약 법전
+            "24일: 신의 RULEBOOK",
+            "신은 말했다. '나만의 유니크한 공동체를 만들고 싶어.' 그래서 그분은 당신의 성격이 그대로 묻어나는 '법'이라는 걸 만드셨지. 이건 단순한 규칙이 아냐. 생명을 지키고, 혼돈을 막는 일종의 '인생 공략집'이라고!",
+            "하지만 십계명만으론 부족했나봐. 디테일이 생명이지! 그래서 신은 '언약 법전'이라는 대규모 패치 노트를 발표했어. 이건 뭐, 거의 확장팩 수준이야.",
+            "예를 들어 '노예' 문제. 당시엔 흔했지만, 신의 법은 달랐어. '6년만 일하면 자유! 주말엔 쉬게 해주고, 기본 생활 보장!' 이건 노예가 아니라 거의 계약직 수준 아니야?",
+            "핵심 교훈: 신의 법은 단순한 '하지마' 리스트가 아니라, '이렇게 살면 꿀잼 보장!'이라는 가이드라인이다.",
+            "뇌풀기 퀴즈: 만약 신이 21세기에 법을 만든다면, 'SNS 사용법'이나 '악플 금지법' 같은 것도 포함됐을까? 어떤 조항이 추가되면 재밌을까?",
+            "인생 퀘스트: 세상엔 아직도 부당한 '노예 계약'이 많아. 직장에서든, 관계에서든. 오늘 하루, 내 주변의 불공정한 룰은 없는지 살펴보고, 그걸 깨기 위한 작은 용기를 내보는 건 어때?",
+            "개발자 코멘트: '내가 만든 십계명, 너무 완벽해서 디테일한 설명서를 추가했어. 너희가 오해할까봐. -God' (부조와 선지자, 364)",
+            "다함께 기도: 주님, 복잡한 세상살이, 주님의 심플하고 명쾌한 룰북으로 살게 해주세요. 제 인생의 악성 버그들을 주님의 코드로 수정해주시고, 성령이라는 최신 백신으로 저를 지켜주세요!",
+
+            // 8월 25일: 더 많은 법도
+            "25일: 디테일에 악마가 산다 (아니, 신이 산다!)",
+            "신의 법은 계속 업데이트돼. 이번엔 재산권, 인간관계 같은 아주 현실적인 문제들을 다루지. '네 소가 내 밭을 망쳤다면?', '훔친 양은 몇 배로 갚아야 할까?' 완전 생활밀착형 법전이야.",
+            "특히 사람을 무시하거나 착취하는 걸 극도로 싫어하셨어. 약자를 보호하는 조항이 아주 빽빽하게 들어있지. 신의 관심사는 언제나 '관계'와 '공동체'였거든.",
+            "그리고 '절기'라는 걸 만들었어. 이건 뭐랄까, 신과의 정기적인 '페스티벌' 같은 거야. '유월절', '오순절', '초막절'. 그냥 노는 게 아니라, 우리가 어떻게 구원받았는지 기억하고 감사하는 시간이지.",
+            "핵심 교훈: 신의 법은 우리를 묶으려는 게 아니라, 우리가 서로를 물어뜯지 않고 함께 춤추게 하려는 거다.",
+            "뇌풀기 퀴즈: 당신이 신이라면, 1년에 세 번, 전 국민이 함께 즐길 '국경일'을 만든다면 어떤 컨셉의 축제를 만들고 싶어? (예: '전국민 멍때리기 대회', '아무것도 안하기의 날')",
+            "인생 퀘스트: 오늘 만나는 사람 중 한 명에게, 그 사람의 가치를 인정해주는 말을 건네보자. '너 때문에 힘이 나' 라든지, '네 생각은 정말 멋져' 같은 말. 신의 '사람 존중법' 제1조를 실천해보는 거야.",
+            "개발자 코멘트: '모세야, 내가 말한 거 전부 책으로 써서 잘 보관해. 이거 완전 중요한 매뉴얼이거든. -God' (살아남는 이들, 171)",
+            "다함께 기도: 주님, 제 마음속의 이기심과 무관심을 주님의 '사랑의 법'으로 포맷해주세요. 제 삶이 주님을 예배하는 축제가 되게 하시고, 제 행동 하나하나가 주님의 뜻을 보여주는 간증이 되게 해주세요.",
+
+            // 8월 26일: 하나님의 원래 계획
+            "26일: 싸우지 않고 이기는 법",
+            "가나안 땅 정복, 보통 생각하면 칼과 창으로 싸우는 대규모 전쟁을 떠올리지? 하지만 신의 원래 계획은 그게 아니었어. '전쟁은 내가 할게, 너희는 그냥 따라와!' 이게 신의 스타일이었지.",
+            "신의 필살기는 '공포'와 '왕벌'이었어. 이스라엘 군대가 도착하기도 전에, 적들이 알아서 짐 싸서 도망가게 만드는 전술이었지. 완전 심리전의 대가 아니야?",
+            "이 모든 작전의 총사령관은 '신의 천사', 바로 그리스도였어. 그분은 낮에는 구름 기둥, 밤에는 불 기둥으로 최첨단 네비게이션 역할까지 하셨지. 이스라엘이 할 일은 딱 하나, 그분의 지시를 믿고 따르는 것뿐이었어.",
+            "핵심 교훈: 인생이라는 전쟁터에서 가장 강력한 무기는 내 힘이 아니라, 신의 계획을 신뢰하는 믿음이다.",
+            "뇌풀기 퀴즈: 만약 당신의 인생에 신이 '왕벌' 같은 치트키를 하나 준다면, 어떤 문제를 해결해달라고 하고 싶어? (예: '출근길 교통체증', '쌓인 설거지', '어려운 인간관계')",
+            "인생 퀘스트: 오늘, 내 힘으로 해결하려 애쓰던 문제 하나를 정해서 신에게 맡겨보자. 그리고 나는 그 시간에 차 한 잔의 여유를 즐기는 거야. '하나님, 이 문제는 주님 담당입니다!' 하고 외쳐봐.",
+            "개발자 코멘트: '가나안 정복? 그거 내가 다 한 거야. 너희는 그냥 내 도구였을 뿐. 그러니 명예나 재물 탐내지 말고, 나한테 영광을 돌려. -God' (부조와 선지자, 491)",
+            "다함께 기도: 주님, 제 인생의 운전대를 제가 꽉 붙잡고 있었네요. 이제 주님께 맡깁니다. 주님의 네비게이션을 신뢰하며 따라갈 때, 싸우지 않고도 승리하는 기적을 경험하게 해주세요.",
+
+            // 8월 27일: 눈에는 눈으로
+            "27일: 복수는 나의 것? NO!",
+            "‘눈에는 눈, 이에는 이.’ 이 말 들으면 어떤 생각이 들어? 뭔가 잔인한 복수극이 떠오르지? 하지만 원래 뜻은 정반대였어. 이건 '개인적인 복수 금지법'이었거든.",
+            "당시엔 누가 나를 한 대 치면, 내가 열 대를 갚아주는 게 당연한 시대였어. 이걸 막기 위해 '딱 받은 만큼만, 그것도 법정에서 판결받아서!'라고 선을 그어준 거야. 사적인 감정으로 법을 집행하는 걸 막는, 아주 세련된 법이었지.",
+            "예수님은 여기서 한 단계 더 나아가셨어. '정의도 중요하지만, 화해와 평화가 더 중요해!' 그분은 법의 원래 목적인 '관계 회복'을 강조하셨지.",
+            "핵심 교훈: 정의의 목적은 복수가 아니라 회복이다. 부수는 것이 아니라, 다시 세우는 것이다.",
+            "뇌풀기 퀴즈: 누군가 내 SNS에 악플을 달았다! '눈에는 눈, 이에는 이' 법칙에 따르면 어떻게 해야 할까? ① 똑같이 악플을 달아준다 ② 법적으로 고소한다 ③ 예수님 스타일로 '너의 키보드에 평화가 있기를' 하고 축복해준다.",
+            "인생 퀘스트: 오늘 나를 화나게 한 사람이나 상황이 있다면, 복수를 계획하는 대신 그를 위해 아주 작은 친절을 베풀어보자. 속으로 '너 잘돼라!' 하고 빌어주는 것만으로도 충분해. 생각보다 마음이 편해질걸?",
+            "개발자 코멘트: '복수하고 싶어? 하지 마. 악을 갚겠다고 말하지도 마. 원수가 배고프면 밥 주고, 목말라하면 물 줘. 그게 진짜 이기는 거야. -God' (산상 보훈, 70)",
+
+            // 8월 28일: 복수
+            "28일: 최종 보스의 품격",
+            "“복수는 내가 알아서 할게. 너희는 신경 꺼.”(롬 12:19) 신의 메시지는 아주 명확해. 왜? 인간은 감정에 휩쓸려서 정의를 왜곡하기 쉽거든. 내로남불은 인간의 기본 패시브 스킬이잖아.",
+            "예수님은 여기서 충격적인 제안을 하셔. “너희 아버지의 온전하심과 같이 너희도 온전하라.” 이게 무슨 뜻일까? 신처럼 완벽해지라는 걸까? 아니!",
+            "신처럼 '사랑하라'는 뜻이야. 신의 가장 완벽한 성품은 '자격 없는 자에게도 베푸는 사랑'이거든. 원수를 사랑하고, 핍박하는 자를 위해 기도하는 것. 그게 바로 신의 '온전함'을 닮아가는 방법이야.",
+            "핵심 교훈: 진정한 승리는 원수를 갚는 게 아니라, 원수까지 사랑할 수 있는 사람이 되는 것이다.",
+            "뇌풀기 퀴즈: 당신의 최애 영화나 드라마 속 '최고의 복수' 장면은 뭐야? 그리고 만약 주인공이 예수님의 방법대로 '사랑'으로 복수했다면, 이야기는 어떻게 바뀌었을까?",
+            "인생 퀘스트: 내 안의 '정의로운 복수심'을 잠재우는 연습을 해보자. 운전 중 끼어드는 차에게 욕하는 대신, '저 사람도 바쁜 일이 있겠지' 하고 생각해보는 거야. 아주 작은 자비의 실천!",
+            "개발자 코멘트: '사람들은 내가 복수하는 재판장인 줄 알더라. 난 그냥 온유한 아빠인데. 내 아들 예수를 보면 알잖아. -God' (시대의 소망, 205)",
+
+            // 8월 29일: 더 깊은 연구
+            "29일: 그래서, 결론이 뭔데?",
+            "정리해볼까? 신의 율법은 우리를 애굽(즉, 죄와 고통)에서 탈출시키기 위한 가이드였어. 그 법의 최종 목적지는 바로 그리스도지. 그분을 통하면 이 모든 빡빡한 룰이 '사랑'이라는 하나의 원칙으로 통합되거든.",
+            "인생은 고통의 연속이지만, 신은 우리가 그걸 감당할 힘을 주신다고 약속했어. 그분은 우리가 걸어갈 길을 이미 먼저 걸어가셨고, 우리가 찔릴 가시에 먼저 찔리셨지.",
+            "토론 타임 1: 신이 이방 민족을 쓸어버리라고 한 건 너무 잔인한 거 아냐? '사랑의 신'과 '공의의 신' 사이에서 길을 잃은 당신, 어떻게 생각해?",
+            "토론 타임 2: '원수를 사랑하라'는 말 바로 뒤에 '너희 아버지처럼 온전하라'고 하셨어. 이거 거의 '에베레스트 등반하고 바로 마라톤 풀코스 뛰라는' 수준 아니야? 왜 이런 무리한 요구를 하셨을까?",
+            "토론 타임 3: '법 아래 있지 않고 은혜 아래 있다'는 말, 이거 '이제 내 맘대로 살아도 된다'는 자유이용권일까? 아니면 다른 뜻이 있을까?",
+            "특별 간증: 술과 절도에 빠졌던 소년, 베델 이야기. 그는 감옥에서 인생의 밑바닥을 찍고 신에게 기도했어. '한 번만 기회를 주시면, 제 인생을 바꾸겠습니다!'",
+            "놀랍게도, 그는 풀려났고, 학교도 그를 다시 받아줬어. 베델은 약속대로 삶을 바꿨고, 지금은 학생회장이자 예비 목사가 되었지. 그는 말해. '신은 망가진 인생도 최고의 작품으로 바꾸실 수 있는 분입니다.'",
+            "학습이 끝났습니다. 당신의 삶에도 베델과 같은 놀라운 반전이 있기를!"
+        ];
+
+        const chatWrapper = document.getElementById('chat-wrapper');
+        const textContent = document.getElementById('text-content');
+        const nextIndicator = document.getElementById('next-indicator');
+        const nameBox = document.getElementById('name-box');
+        
+        let messageIndex = -1; 
+
+        function showNextMessage() {
+            messageIndex++;
+            if (messageIndex < sermon.length) {
+                const currentText = sermon[messageIndex];
+                const parts = currentText.split(': ');
+                
+                // Update title and content
+                if (parts.length > 1 && (currentText.includes("일: ") || currentText.startsWith("핵심 교훈") || currentText.startsWith("뇌풀기 퀴즈") || currentText.startsWith("인생 퀘스트") || currentText.startsWith("개발자 코멘트") || currentText.startsWith("다함께 기도") || currentText.startsWith("토론 타임") || currentText.startsWith("특별 간증"))) {
+                    let title = parts[0];
+                    if (title.startsWith("뇌풀기 퀴즈")) title += " 🧠";
+                    if (title.startsWith("인생 퀘스트")) title += " ⚔️";
+                    if (title.startsWith("개발자 코멘트")) title += " 📜";
+                    if (title.startsWith("다함께 기도")) title += " 🙏";
+                    if (title.startsWith("토론 타임")) title = "🔥 핫이슈 토론 🔥";
+                    nameBox.textContent = title;
+                    textContent.textContent = parts.slice(1).join(': ');
+                } else {
+                    textContent.textContent = currentText;
+                }
+                
+                // Reset scroll to top for new message
+                chatWrapper.scrollTop = 0;
+
+            } else {
+                textContent.textContent = "학습이 끝났습니다. 당신의 삶에도 놀라운 반전이 있기를!";
+                nameBox.textContent = "마침";
+                nextIndicator.style.display = 'none';
+                chatWrapper.style.cursor = 'default';
+            }
+        }
+
+        chatWrapper.addEventListener('click', showNextMessage);
+
+    </script>
+</body>
+</html>
