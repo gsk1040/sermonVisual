@@ -35,14 +35,13 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            /* --- 배경 이미지 설정 --- */
-            background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop'); /* 원하시는 배경 이미지 URL로 변경하세요. */
-            background-size: cover; /* 이미지가 전체 영역을 덮도록 설정합니다. */
-            background-position: center; /* 이미지를 중앙에 위치시킵니다. */
+            background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
             overflow: hidden;
         }
 
-        /* Animated background effect from the streaming version */
+        /* Animated background effect */
         #whole-wrapper::before, #whole-wrapper::after {
             content: '';
             position: absolute;
@@ -75,107 +74,67 @@
             to { transform: translate(-30%, 30%) scale(0.9); }
         }
 
-        /* --- Dialogue Panel --- */
+        /* Main container for title and dialogue */
+        #content-container {
+            position: relative;
+            width: 90vw;
+            max-width: 900px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #name-box {
+            background-color: var(--name-bg);
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--border-color);
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+        }
+
         #chat-wrapper {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 98vw;
-            max-width: 1100px;
+            width: 100%;
             min-height: 200px;
             height: auto;
-            max-height: 90vh;
+            max-height: 60vh;
             overflow-y: auto;
             background-color: var(--dialogue-bg);
             border: 2px solid var(--border-color);
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
             backdrop-filter: blur(10px);
-            z-index: 10;
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            padding: 10px;
+            padding: 20px;
             box-sizing: border-box;
-        }
-
-        #name-box {
-            position: absolute;
-            top: 5vh;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--name-bg);
-            padding: 18px 40px;
-            border-radius: 12px;
-            border: 2px solid var(--border-color);
-            font-size: 2.2em;
-            font-weight: 700;
-            color: var(--border-color);
-            max-width: 90vw;
-            overflow: visible;
-            white-space: normal;
-            text-overflow: unset;
-            box-sizing: border-box;
-            word-break: break-word;
-            height: auto;
-            z-index: 20;
         }
 
         #text-wrapper {
             flex-grow: 1;
-            padding: 20px 10px;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            flex-wrap: wrap;
         }
 
         #text-content {
-            font-size: 2em;
-            line-height: 1.7;
+            font-size: 1.5em;
+            line-height: 1.8;
             text-align: left;
-            width: calc(100% - 40px);
-            word-break: break-word;
-            overflow-wrap: break-word;
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-
-        @media (max-width: 600px) {
-            #chat-wrapper {
-                width: 99vw;
-                max-width: 99vw;
-                min-height: 120px;
-                max-height: 95vh;
-                font-size: 0.95em;
-                padding: 6px;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-            }
-            #text-content {
-                font-size: 1.2em;
-            }
-            #name-box {
-                font-size: 1.3em;
-                left: 50%;
-                transform: translateX(-50%);
-                padding: 10px 12px;
-                max-width: 96vw;
-                white-space: normal;
-                height: auto;
-                word-break: break-word;
-            }
-            #chat-wrapper {
-                max-height: 85vh;
-            }
+            width: calc(100% - 50px); /* Space for the next indicator */
+            word-break: keep-all; /* Prevents awkward word breaks */
         }
 
         #next-indicator {
             font-size: 2.5em;
             color: var(--border-color);
             animation: blink-arrow 1.5s infinite;
+            padding-left: 10px;
         }
 
         @keyframes blink-arrow {
@@ -183,16 +142,38 @@
             50% { opacity: 0.3; }
         }
 
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            #name-box {
+                font-size: 1.3em;
+                padding: 10px 20px;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+            #chat-wrapper {
+                padding: 15px;
+                max-height: 70vh;
+            }
+            #text-content {
+                font-size: 1.1em;
+                width: calc(100% - 40px);
+            }
+            #next-indicator {
+                font-size: 2em;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div id="whole-wrapper">
-        <div id="name-box">신의 RULEBOOK</div>
-        <div id="chat-wrapper">
-            <div id="text-wrapper">
-                <p id="text-content">여기를 클릭하여 시작하세요...</p>
-                <div id="next-indicator">&gt;</div>
+        <div id="content-container">
+            <div id="name-box">신의 RULEBOOK</div>
+            <div id="chat-wrapper">
+                <div id="text-wrapper">
+                    <p id="text-content">여기를 클릭하여 시작하세요...</p>
+                    <div id="next-indicator">&gt;</div>
+                </div>
             </div>
         </div>
     </div>
@@ -269,39 +250,36 @@
         const nextIndicator = document.getElementById('next-indicator');
         const nameBox = document.getElementById('name-box');
         
-        let messageIndex = -1; // Start at -1 to show the initial message
+        let messageIndex = -1; 
 
         function showNextMessage() {
             messageIndex++;
             if (messageIndex < sermon.length) {
                 const currentText = sermon[messageIndex];
-                textContent.textContent = currentText.split(': ')[1] || currentText;
-
-                // Change title based on content
-                if (currentText.includes("일: ")) {
-                    nameBox.textContent = currentText.split(': ')[0]; 
-                } else if (currentText.startsWith("핵심 교훈")) {
-                    nameBox.textContent = "오늘의 핵심";
-                } else if (currentText.startsWith("뇌풀기 퀴즈")) {
-                    nameBox.textContent = "뇌풀기 퀴즈 🧠";
-                } else if (currentText.startsWith("인생 퀘스트")) {
-                    nameBox.textContent = "인생 퀘스트 ⚔️";
-                } else if (currentText.startsWith("개발자 코멘트")) {
-                    nameBox.textContent = "개발자 코멘트 📜";
-                } else if (currentText.startsWith("다함께 기도")) {
-                    nameBox.textContent = "다함께 기도 🙏";
-                } else if (currentText.startsWith("토론 타임")) {
-                    nameBox.textContent = "🔥 핫이슈 토론 🔥";
-                } else if (currentText.startsWith("특별 간증")) {
-                    nameBox.textContent = "특별 간증";
+                const parts = currentText.split(': ');
+                
+                // Update title and content
+                if (parts.length > 1 && (currentText.includes("일: ") || currentText.startsWith("핵심 교훈") || currentText.startsWith("뇌풀기 퀴즈") || currentText.startsWith("인생 퀘스트") || currentText.startsWith("개발자 코멘트") || currentText.startsWith("다함께 기도") || currentText.startsWith("토론 타임") || currentText.startsWith("특별 간증"))) {
+                    let title = parts[0];
+                    if (title.startsWith("뇌풀기 퀴즈")) title += " 🧠";
+                    if (title.startsWith("인생 퀘스트")) title += " ⚔️";
+                    if (title.startsWith("개발자 코멘트")) title += " 📜";
+                    if (title.startsWith("다함께 기도")) title += " 🙏";
+                    if (title.startsWith("토론 타임")) title = "🔥 핫이슈 토론 🔥";
+                    nameBox.textContent = title;
+                    textContent.textContent = parts.slice(1).join(': ');
+                } else {
+                    textContent.textContent = currentText;
                 }
-
+                
+                // Reset scroll to top for new message
+                chatWrapper.scrollTop = 0;
 
             } else {
                 textContent.textContent = "학습이 끝났습니다. 당신의 삶에도 놀라운 반전이 있기를!";
                 nameBox.textContent = "마침";
-                nextIndicator.style.display = 'none'; // Hide indicator at the end
-                chatWrapper.style.cursor = 'default'; // Change cursor to default
+                nextIndicator.style.display = 'none';
+                chatWrapper.style.cursor = 'default';
             }
         }
 
