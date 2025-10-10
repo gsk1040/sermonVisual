@@ -1,357 +1,275 @@
-# 하나님의 법과 공동체 - 비주얼 노벨
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>하나님의 법과 공동체 - 비주얼 노벨</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-      :root {
-        --dialogue-bg: rgba(10, 25, 47, 0.85);
-        --name-bg: #172a46;
-        --text-color: #e6f1ff;
-        --border-color: #64ffda;
-        --font-main: "Nanum Myeongjo", serif;
-      }
-
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        font-family: var(--font-main);
-        background-color: #0a192f;
-        color: var(--text-color);
-        overflow: hidden;
-      }
-
-      #whole-wrapper {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        /* --- 배경 이미지 설정 --- */
-        /* background: #0A192F; 기존 배경색은 주석 처리합니다. */
-        background-image: url("https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop"); /* 원하시는 배경 이미지 URL로 변경하세요. */
-        background-size: cover; /* 이미지가 전체 영역을 덮도록 설정합니다. */
-        background-position: center; /* 이미지를 중앙에 위치시킵니다. */
-        overflow: hidden;
-      }
-
-      /* Animated background effect from the streaming version */
-      #whole-wrapper::before,
-      #whole-wrapper::after {
-        content: "";
-        position: absolute;
-        border-radius: 50%;
-        opacity: 0.1;
-        z-index: 1;
-        filter: blur(50px);
-      }
-
-      #whole-wrapper::before {
-        width: 80vmax;
-        height: 80vmax;
-        background: radial-gradient(
-          circle,
-          #ffc94d 0%,
-          rgba(255, 201, 77, 0) 60%
-        );
-        animation: move-glow 25s infinite alternate ease-in-out;
-      }
-
-      #whole-wrapper::after {
-        width: 60vmax;
-        height: 60vmax;
-        background: radial-gradient(
-          circle,
-          #a1c4fd 0%,
-          rgba(161, 196, 253, 0) 60%
-        );
-        animation: move-glow-2 30s infinite alternate ease-in-out;
-      }
-
-      @keyframes move-glow {
-        from {
-          transform: translate(-20%, -20%) scale(0.8);
+        :root {
+            --dialogue-bg: rgba(10, 25, 47, 0.85);
+            --name-bg: #172A46;
+            --text-color: #E6F1FF;
+            --border-color: #64FFDA;
+            --font-main: 'Nanum Myeongjo', serif;
         }
-        to {
-          transform: translate(20%, 20%) scale(1.2);
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: var(--font-main);
+            background-color: #0A192F;
+            color: var(--text-color);
+            overflow: hidden;
         }
-      }
-      @keyframes move-glow-2 {
-        from {
-          transform: translate(30%, -30%) scale(1.1);
+
+        #whole-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            /* --- 배경 이미지 설정 --- */
+            /* background: #0A192F; 기존 배경색은 주석 처리합니다. */
+            background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop'); /* 원하시는 배경 이미지 URL로 변경하세요. */
+            background-size: cover; /* 이미지가 전체 영역을 덮도록 설정합니다. */
+            background-position: center; /* 이미지를 중앙에 위치시킵니다. */
+            overflow: hidden;
         }
-        to {
-          transform: translate(-30%, 30%) scale(0.9);
+
+        /* Animated background effect from the streaming version */
+        #whole-wrapper::before, #whole-wrapper::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: 1;
+            filter: blur(50px);
         }
-      }
 
-      /* --- Dialogue Panel --- */
-      #chat-wrapper {
-        position: absolute;
-        bottom: 5vh;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 900px;
-        height: 200px;
-        background-color: var(--dialogue-bg);
-        border: 2px solid var(--border-color);
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
-        backdrop-filter: blur(10px);
-        z-index: 10;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        padding: 10px;
-        box-sizing: border-box;
-      }
-
-      #name-box {
-        position: absolute;
-        top: -30px;
-        left: 30px;
-        background-color: var(--name-bg);
-        padding: 10px 25px;
-        border-radius: 8px 8px 0 0;
-        border: 2px solid var(--border-color);
-        border-bottom: none;
-        font-size: 1.3em;
-        font-weight: 700;
-        color: var(--border-color);
-      }
-
-      #text-wrapper {
-        flex-grow: 1;
-        padding: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-      }
-
-      #text-content {
-        font-size: 1.5em;
-        line-height: 1.7;
-        text-align: left;
-        width: calc(100% - 40px);
-      }
-
-      #next-indicator {
-        font-size: 2.5em;
-        color: var(--border-color);
-        animation: blink-arrow 1.5s infinite;
-      }
-
-      @keyframes blink-arrow {
-        0%,
-        100% {
-          opacity: 1;
+        #whole-wrapper::before {
+            width: 80vmax;
+            height: 80vmax;
+            background: radial-gradient(circle, #ffc94d 0%, rgba(255,201,77,0) 60%);
+            animation: move-glow 25s infinite alternate ease-in-out;
         }
-        50% {
-          opacity: 0.3;
+
+        #whole-wrapper::after {
+            width: 60vmax;
+            height: 60vmax;
+            background: radial-gradient(circle, #a1c4fd 0%, rgba(161,196,253,0) 60%);
+            animation: move-glow-2 30s infinite alternate ease-in-out;
         }
-      }
+
+        @keyframes move-glow {
+            from { transform: translate(-20%, -20%) scale(0.8); }
+            to { transform: translate(20%, 20%) scale(1.2); }
+        }
+        @keyframes move-glow-2 {
+            from { transform: translate(30%, -30%) scale(1.1); }
+            to { transform: translate(-30%, 30%) scale(0.9); }
+        }
+
+        /* --- Dialogue Panel --- */
+        #chat-wrapper {
+            position: absolute;
+            bottom: 5vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 900px;
+            height: 200px;
+            background-color: var(--dialogue-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        #name-box {
+            position: absolute;
+            top: -30px;
+            left: 30px;
+            background-color: var(--name-bg);
+            padding: 10px 25px;
+            border-radius: 8px 8px 0 0;
+            border: 2px solid var(--border-color);
+            border-bottom: none;
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--border-color);
+        }
+
+        #text-wrapper {
+            flex-grow: 1;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        #text-content {
+            font-size: 1.5em;
+            line-height: 1.7;
+            text-align: left;
+            width: calc(100% - 40px);
+        }
+
+        #next-indicator {
+            font-size: 2.5em;
+            color: var(--border-color);
+            animation: blink-arrow 1.5s infinite;
+        }
+
+        @keyframes blink-arrow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
     </style>
-  </head>
-  <body>
+</head>
+<body>
+
     <div id="whole-wrapper">
-      <div id="chat-wrapper">
-        <div id="name-box">하나님의 법과 공동체</div>
-        <div id="text-wrapper">
-          <p id="text-content">여기를 클릭하여 시작하세요...</p>
-          <div id="next-indicator">&gt;</div>
+        <div id="chat-wrapper">
+            <div id="name-box">놀라운 은혜</div>
+            <div id="text-wrapper">
+                <p id="text-content">여기를 클릭하여 시작하세요...</p>
+                <div id="next-indicator">&gt;</div>
+            </div>
         </div>
-      </div>
     </div>
 
     <script>
-      const sermon = [
-        // 기존 내용
-        "하나님은 당신의 백성이 그 지도와 권위 아래 살아가는 신실한 믿음의 공동체가 되기 원하셨다.",
-        "하나님의 법은 그분의 성품을 나타내며 어떻게 통치하시는지를 보여준다.",
-        "그분의 법은 생명을 존중하며 풍요로운 삶을 위한 기초를 제공하고 어려움으로부터 우리를 보호한다.",
-        "우리는 올바른 영적인 토대 위에서 실제 직면하는 모든 일을 대할 필요가 있다.",
-        "하나님께서 온전하신 것처럼 우리는 삶 속에서 사랑과 평화의 원칙을 실천해야 한다.",
-        "기억절: “너는 이스라엘 자손에게 이같이 이르라 내가 하늘로부터 너희에게 말하는 것을 너희 스스로 보았으니 너희는 나를 비겨서 은으로나 금으로나 너희를 위하여 신상을 만들지 말고”(출 20:22-23).",
-        "하나님께서는 당신의 백성이 주변 국가들과 다르기를 원하셨다. 그들이 당신의 지도와 권위 아래 살아가는 신실한 믿음의 공동체로 세워지기를 바라셨다.",
-        "어떤 문화권에서든 법은 입법자의 이상, 목표, 의도, 성격을 나타낸다.",
-        "예를 들어 바로가 모든 히브리 남자아이를 죽이라고 명령했을 때, 이 법은 그의 악함을 보여주었다.",
-        "반대로, 어떤 왕이 모든 18세에게 고등 교육을 무료로 제공하는 법을 만들었다면, 이는 왕의 관대함과 나라의 번영을 바라는 열망의 증거로 여길 것이다.",
-        "하나님의 법은 그분의 어떠하심, 곧 그분의 선하심, 사랑, 가치, 의, 또 악을 어떻게 다스리시는지를 보여준다.",
-        "율법이 거룩하고 공정한 것처럼 하나님도 그러하시다. 율법은 풍요로운 삶을 위한 자리를 마련하는 동시에 위험과 재난으로부터 우리를 보호하도록 돕는다.",
-        "생명에 대한 존중은 하나님의 입법 제도의 기초이다.",
-        "학습 목표 (깨닫기): 하나님은 당신의 백성이 삶 속에서 하나님의 성품에 합당하게 당신의 법을 실천하길 원하신다.",
-        "학습 목표 (느끼기): 인간은 불순종과 범죄로 잘못된 길로 가지만 하나님은 여전히 통치하시며 바른 길로 이끄신다.",
-        "학습 목표 (행하기): 하나님께서 온전하신 것처럼 우리도 삶 속에서 사랑과 평화의 원칙을 실천하려고 해야 한다.",
-        "질문: 십계명을 주신 주님께서 추가적인 법규를 주신 이유는 무엇일까요? (출 21:1)",
-        "질문: 안식일과 절기에 관한 내용을 신중하게 규정한 이유는 무엇일까요? (출 23:10-19)",
-        "질문: 보복법에 대한 예수님의 말씀을 우리는 어떻게 이해해야 할까요? (마 5:38)",
-        "질문: 하늘에 계신 아버지의 온전하심처럼 온전하라는 말씀은 어떤 의미를 담고 있습니까? (마 5:48)",
-        "결론: 하나님의 법은 그분의 성품을 나타내며 어떻게 통치하시는지를 보여줍니다.",
-        "그분의 법은 생명을 존중하며, 풍요로운 삶의 기초를 제공하고, 어려움으로부터 우리를 보호합니다.",
-        "하나님께서 온전하신 것처럼, 우리도 삶 속에서 사랑과 평화의 원칙을 실천해야 합니다.",
-        "TMI 실천: 고아원을 방문해서 필요한 도움을 주세요. 외출이 어려운 이들을 도와주세요. 더운 날 누군가에게 시원한 음료수를 건네세요.",
-        // 2025년 8월 24일 일요일 내용 추가
-        "2025년 8월 24일 일요일: 언약 법전",
-        "율법이 일상에 적용되어야 했기 때문에 하나님은 추가적인 율례를 주셨다. 이것은 죄악이 세상을 덮는 것을 막고 질서 있는 사회를 세우기 위해 제정되었다.",
-        "시내산에서 율법을 주심으로써 하나님은 당신과의 연결을 통해 당신의 백성이 어떻게 거룩한 삶을 살 수 있는지를 가르치기 위한 기초를 세우셨다.",
-        "부가적인 규례들은 십계명의 원칙을 설명하고 적용하는 것들이었다. 이 법들이 ‘율례’라고 불리는데, 이는 법관들이 그것에 따라 판결을 내리도록 되어 있었기 때문이었다.",
-        "언약 법전은 히브리 종, 살인, 신체 상해에 관한 구체적인 율례를 포함한다. (출애굽기 21:1-32)",
-        "히브리의 노예 법은 독특한 것으로, 근대 또는 중세의 잔혹한 노예제도와 혼동해서는 안된다. 히브리 종들은 실제로 보호받고 소중히 여겨졌다.",
-        "종살이는 6년으로 제한되었고, 7년째 되는 해에 모든 종은 해방되어야 했다. 주인은 종들에게 안식일의 쉼과 기본적인 필요를 채워 주어야 했다.",
-        "<교훈> 율법이 일상에 적용되어야 했기 때문에 하나님은 추가적인 율례를 주셨다. 이것은 죄악이 세상을 덮는 것을 막고 질서 있는 사회를 세우기 위해 제정되었다.",
-        "<묵상> 하나님의 법이 없는 사람들의 세계는 어떤 모습을 보입니까?",
-        "<적용> 오늘날 여전히 존재하는 노예제의 원칙에 맞서 싸우기 위해 어떤 일을 할 수 있겠습니까?",
-        "<영감의 교훈> 십계명을 확대한 율례와 법도 - 이 지시들은 십계명의 원칙이 확대된 것에 지나지 않았으며, 돌비에 새겨진 열 교훈의 신성함을 수호하기 위하여 계획된 것이다.",
-        "<기도> 세상의 원칙이 아닌 하나님의 원칙으로 구별하시는 특권을 주시고, 실생활에서 어떻게 적용할지 알려 주셔서 감사합니다. 성령의 법을 따라 살도록 도와주옵소서.",
-        // 2025년 8월 25일 월요일 내용 추가
-        "2025년 8월 25일 월요일: 더 많은 법도",
-        "하나님의 법은 사람의 마음의 악을 바로잡고 좋은 상호 관계를 배양하며 공의와 사랑이 행동을 다스리게 하며 구원과 구속을 되새기게 했다.",
-        "자비하신 하나님은 재산권과 관련한 다양한 상황에서 사람들을 어떻게 대할지를 가르쳐 주셨다. (출 21:33-22:15)",
-        "하나님의 법은 사람을 짓밟거나 모욕하는 문제를 다루는 구체적인 규정도 있었다. 하나님은 어떤 종류의 착취도 허용하지 않으신다.",
-        "안식일과 절기는 예배에 관한 것이며 구원사에 나타난 중요한 사건들을 되새기게 했다. (출애굽기 23:10-19)",
-        "안식일은 창조 때 제정되었고, 이스라엘의 구원과 구속과 연결되었으며, 하나님을 창조주, 구속주, 주님으로 경배해야 할 것을 가리킨다.",
-        "이스라엘은 매년 세 가지 중요한 절기, 즉 유월절, 오순절, 초막절을 지켜야 했다.",
-        "<교훈> 하나님의 법은 사람의 마음의 악을 바로잡고, 좋은 상호 관계를 배양하며, 구원과 구속을 되새기게 했다.",
-        "<묵상> 사람을 짓밟거나 모욕하는 문제를 다루는 규정을 주신 것을 생각해 보십시오. 우리는 어떻게 하나님의 뜻과 동떨어진 모습을 보이곤 합니까?",
-        "<적용> 나의 관계와 행동을 어떻게 그분의 뜻과 일치하도록 바꿀 수 있겠습니까?",
-        "<영감의 교훈> 모세의 책 - 모세는 모든 계명과 율례와 법도 및 희생 제물에 관한 규칙을 책에 기록하여 법궤 곁에 두라고 요청하였다.",
-        "<기도> 주님의 공의와 사랑을 마음에 새겨 우리의 행동 가운데 하나님의 뜻이 나타나도록 우리를 인도해 주옵소서.",
-        // 2025년 8월 26일 화요일 내용 추가
-        "2025년 8월 26일 화요일: 하나님의 원래 계획",
-        "이스라엘이 영토를 차지하기 위해 무력으로 싸우는 것은 하나님의 의도가 아니었다. 그분의 지도력과 뜻을 따랐다면 그것은 특별한 선물로 주어졌을 것이다.",
-        "약속의 땅을 어떻게 정복할 것인지는 홍해를 건너는 과정을 통해 이미 보여졌다. 하나님께서 당신의 백성을 위해 싸우셨다.",
-        "하나님이 아브라함에게 약속의 땅이 400년 후에야 주어질 것이라고 알려주신 이유는 가나안 땅 거민들의 악과 관련이 있었다.",
-        "하나님은 왕벌로 백성들을 쫓아내는 등 특이하지만 효과적인 방법으로 이스라엘보다 앞서 그 나라들을 몰아내시겠다고 약속하셨다.",
-        "약속의 땅을 정복하는 데 결정적인 역할을 한 것은 하나님의 천사, 곧 그리스도이셨다. 이스라엘은 그분의 말씀에 주의를 기울이고 따라야 했다.",
-        "<교훈> 이스라엘이 영토를 차지하기 위해 무력으로 싸우는 것은 하나님의 의도가 아니었다. 그분의 지도력을 따랐다면 선물로 주어졌을 것이다.",
-        "<묵상> 하나님께서 이방 백성에게 그들의 길을 바꿀 수 있도록 오랜 시간을 주신 것에 대해 생각해 보십시오. 우리에게도 하나님은 얼마나 오래 기다리십니까?",
-        "<적용> 이방 백성은 결국 심판을 받았습니다. 이것은 하나님의 은혜와 그 한계에 대해 무엇을 가르쳐 줍니까?",
-        "<영감의 교훈> 가나안 정복은 여호와의 능력으로 - 그 정복은 전부 여호와의 능력으로 이루어졌으므로, 그들은 다만 하나님의 뜻을 집행하는 도구에 불과했다.",
-        "<기도> 주께서 우리의 하나님이 되심을 알 수 있는 지혜를 주시며, 우리의 뜻이 아닌 하나님의 뜻이 우리 가운데 이루어지도록 도와주옵소서.",
-        // 2025년 8월 27일 수요일 내용 추가
-        "2025년 8월 27일 수요일: 눈에는 눈으로",
-        "정의는 실현되어야 하지만, 자기 손이 아닌 하나님 법에 따라야 했다. 예수님은 정의와 화해를 가져오고 평화를 회복하기 위해 잘못된 것을 바로잡으셨다.",
-        "산상수훈에서 예수님은 “눈은 눈으로, 이는 이”라는 보복법의 원래 의미를 회복시키셨다. (마태복음 5:38-48)",
-        "이 법이 제정된 원래 의도는 개인적인 복수를 막기 위한 것이었다. 부상을 입은 경우는 판관이 평가한 후 적절한 금전적 보상이 결정되어야 했다.",
-        "이러한 관행은 사람들이 “자기 손으로 법을 집행하는 것”을 막기 위한 것이었다. 정의는 실현되어야 하지만, 하나님의 법에 따라 이루어져야 했다.",
-        "<교훈> 정의는 실현되어야 하지만, 자기 손이 아닌 하나님 법에 따라야 했다. 예수님은 정의와 화해, 평화를 회복하기 위해 잘못된 것을 바로잡으셨다.",
-        "<묵상> 당신도 보복하고자 하는 마음 때문에 고통하며 괴로웠던 적이 있습니까?",
-        "<적용> 언젠가 정의가 실현될 것을 깨닫는 것은 지금 세상에서 직면하는 불의를 대하는 데 어떻게 도움이 되겠습니까?",
-        "<영감의 교훈> 복수는 정당화될 수 없음 - ‘너는 악을 갚겠다 말하지 말고’(잠 20:22), ‘네 원수가 배고파 하거든 식물을 먹이고 목말라 하거든 물을 마시우라’(잠 25:21)",
-        // 2025년 8월 28일 목요일 내용 추가
-        "2025년 8월 28일 목요일: 복수",
-        "사람은 정의를 왜곡할 수 있기에 하늘 원칙을 따라야 한다. 이 맥락에서 우리에게 하늘 아버지처럼 온전하라고 말씀하시며 사랑하고 자비를 베풀라 하신다.",
-        "“원수 갚는 것이 내게 있으니 내가 갚으리라고 주께서 말씀하시니라” (롬 12:19). 이 구절에는 약속과 명령이 함께 담겨 있다.",
-        "예수님 때의 율법 선생들은 법을 개인적인 복수를 허용하는 것처럼 적용하여 본래의 의도를 상실하게 만들었다.",
-        "예수님은 보상과 처벌의 원칙에 반대하지 않으셨지만, 어떤 개인도 스스로 재판관, 배심원, '집행자'가 될 수는 없다고 가르치셨다.",
-        "이러한 맥락에서 예수님은 우리에게 “하늘에 계신 너희 아버지의 온전하심과 같이 너희도 온전하라”라고 말씀하신다.",
-        "진정한 완전은 사랑하고, 용서하고, 자비를 베푸는 것이며, 심지어 자격이 없는 사람에게까지 그렇게 하는 것이다.",
-        "<교훈> 사람은 정의를 왜곡할 수 있기에 하늘 원칙을 따라야 한다. 우리에게 하늘 아버지처럼 온전하라고 말씀하시며 사랑하고 자비를 베풀라 하신다.",
-        "<묵상> 우리는 어떻게 하면 매일 하나님의 명령하신대로 사랑하는 법을 배울 수 있겠습니까?",
-        "<적용> 하나님의 온전하심과 같이 온전히 사랑하기 위해서 우리에게 무엇이 필요합니까? 이를 위해서 왜 항상 자아를 죽이는 일이 따라야 합니까?",
-        "<영감의 교훈> 예수는 하나님이 복수하는 재판장이 아니요 온유하신 아버지라고 말씀하시며 자기 안에 반사된 하나님의 형상을 드러내셨다.",
-        // 2025년 8월 29일 금요일 내용 추가
-        "2025년 8월 29일 금요일: 더 깊은 연구를 위하여",
-        "하나님은 이스라엘을 애굽에서 이끌어 내시고 그들에게 율법을 주셨다. 그분의 율법은 그리스도를 가리키며 우리가 그리스도의 은혜 가운데 율법을 따를 때 그 짐은 가벼워진다.",
-        "죄가 들어온 이후로 우리 중에 슬픔과 고통을 겪어보지 않은 사람이 없지만, 하나님은 대처할 수 있는 힘을 주신다.",
-        "“귀하신 구주께서는 우리에게 도움이 필요한 바로 그 때에 도와주실 것이다. 하늘로 가는 길은 그분의 발자국으로 거룩해진다.”",
-        "함께하는 토의를 위하여 1: 이방 민족들을 몰아내신 사건 가운데 하나님의 공의와 사랑을 어떻게 이해할 수 있는가?",
-        "함께하는 토의를 위하여 2: 원수를 사랑하라는 말씀 뒤에 왜 아버지처럼 온전하라는 명령을 하셨는가?",
-        '함께하는 토의를 위하여 3: “너희가 법 아래에 있지 아니하고 은혜 아래에 있음이라"(롬 6:14)는 선언은 무엇을 의미하는가?',
-        "음주, 절도, 그리고 하나님: 베델은 재림교회 가정에서 자랐지만 어머니가 돌아가신 후 술을 마시기 시작했습니다.",
-        "감옥에서 베델은 눈물로 하나님 앞에 마음을 낮추고 회개했습니다. “사랑하는 하나님, 이것이 주님이 주신 교훈이 되어 제가 바뀌게 된다면, 더 나은 사람이 되겠다고 약속하겠습니다.”",
-        "15일 후, 경찰은 뜻밖에도 베델과 친구를 풀어주었고, 그는 하나님께서 자신의 기도를 들으시고 다시 기회를 주신 것이라는 생각이 들었습니다.",
-        "그는 술을 끊고 성경을 공부하며 침례를 받고 하나님께 마음을 바쳤습니다. 교수님과 학생들은 그의 놀라운 변화를 목격했습니다.",
-        "현재 베델은 학생회장이자 목사가 될 준비를 하고 있습니다. 그는 말합니다. “하나님은 루산구의 어느 술 취한 말썽꾸러기 소년의 인생을 바꾸어 주셨습니다.”",
-      ];
+        const sermon = [
+            "10월 11일 안식일 - 일몰: 오후 6시 00분",
+            "하나님의 법은 그분의 성품을 나타내며 어떻게 통치하시는지를 보여준다.",
+            "그분의 법은 생명을 존중하며 풍요로운 삶을 위한 기초를 제공하고 어려움으로부터 우리를 보호한다.",
+            "우리는 올바른 영적인 토대 위에서 실제 직면하는 모든 일을 대할 필요가 있다.",
+            "하나님께서 온전하신 것처럼 우리는 삶 속에서 사랑과 평화의 원칙을 실천해야 한다.",
+            "10월 11일 안식일 - 일몰: 오후 6시 00분",
+            "'내가 또 왜 그랬을까?' 우리는 얼마나 자주 이런 말을 해왔던가요?",
+            "역사만 반복되는 것이 아닙니다. 모든 인류는, 특히 우리 자신도 했던 잘못을 되풀이합니다.",
+            "이스라엘은 약속의 땅에 들어갈 두 번째 기회를 얻었습니다. 여호수아는 이 임무를 신중하게 이행합니다.",
+            "제일 먼저 할 일은 자신들이 직면한 상황을 명확히 이해하는 것이었습니다.",
+            "여호수아는 두 명의 정탐꾼을 보내 그 땅의 중요한 정보를 수집하게 했습니다.",
+            "하나님께서 약속하셨기 때문에 아무 노력 없이도 그 땅이 주어질 것이라 생각할 수도 있습니다.",
+            "그러나 하나님이 확실히 도와주실 것이라고 해서 인간의 책임이 배제되는 것은 아닙니다.",
+            "하나님의 은혜는 우리를 놀라게 할, 생각지도 못한 가능성을 담고 있습니다.",
+            "기억절: '믿음으로 기생 라합은 정탐꾼을 평안히 영접하였으므로 순종하지 아니한 자와 함께 멸망하지 아니하였도다' (히브리서 11:31)",
+            "학습 목표 (깨닫기): 하나님의 은혜는 놀라우며 우리가 생각지도 못한 가능성을 담고 있습니다.",
+            "학습 목표 (느끼기): 하나님은 모든 인류를 차별 없이 대하시며 새롭게 시작할 수 있는 기회를 주십니다.",
+            "학습 목표 (행하기): 우리의 믿음을 행동으로 실천하여 하나님의 놀라운 은혜에 동참합니다.",
+            "첫째 날 - 두 번째 기회",
+            "두 정탐꾼이 잠입한 싯딤은 이스라엘 역사의 두 가지 부정적인 사건을 떠올리게 합니다.",
+            "이번에도 약속의 땅 입구에서 또다시 실패하게 될 것인가? 아니면 오랫동안 기다린 약속의 성취로 이어질 것인가?",
+            "베드로를 기억하십니까? 그는 예수님을 세 번이나 부인했습니다.",
+            "그러나 주님은 그에게 다시 기회를 주셨습니다. 요한복음 21장에서 세 번 사랑을 확인하시며 회복시켜 주셨습니다.",
+            "하나님은 두 번째 기회, 아니 그보다 더한 기회를 주시는 하나님이십니다.",
+            "이러한 두 번째 기회를 성경은 '은혜'라고 부릅니다.",
+            "은혜는 간단히 말해 우리가 받을 자격이 없는 것을 받는 것입니다.",
+            "하나님의 은혜가 아니었다면 우리는 지금 어디에 있겠습니까?",
+            "둘째 날 - 뜻밖의 장소에서 발견한 보석",
+            "라합... 그녀는 여리고의 기생이었습니다. 극도로 죄악된 사회에 속해 있었습니다.",
+            "타락하고 부패한 문화와 라합의 죄악된 생활 방식 속에서도, 은혜의 하나님은 그녀를 구원할 믿음의 불꽃을 보셨습니다.",
+            "하나님은 라합의 탁월한 용기, 담대한 믿음, 이스라엘의 하나님을 선택한 것을 높이 평가하셨습니다.",
+            "하나님의 역사를 본 후 그녀는 선언했습니다: '너희의 하나님 여호와는 위로는 하늘에서도 아래로는 땅에서도 하나님이시니라!'",
+            "라합의 말은 이스라엘의 하나님만이 유일하고 참된 신이심을 인정하는 의도적이고 양심적인 선택을 보여줍니다.",
+            "이스라엘의 하나님을 선택함으로써 라합은 여리고의 거민 누구라도 하나님께 자비를 구했다면 어떤 결과를 맞이했을지 보여주는 본보기가 되었습니다.",
+            "셋째 날 - 새로운 충성",
+            "라합의 약속은 명확했습니다. 생명에는 생명을, 친절에는 친절을 원하는 것이었습니다.",
+            "라합은 갓 움튼 믿음으로 이스라엘 백성에게 주어진 약속을 주장했고, 그 결과 그녀는 구원을 받았습니다.",
+            "정탐꾼들과 라합의 대화는 출애굽 당시 유월절을 떠올리게 합니다.",
+            "그때 이스라엘 백성은 보호받기 위해 집 문틀에 희생양의 피를 발라야 했습니다.",
+            "사람은 행함이 아닌, 믿음으로 구원을 얻습니다. 그러나 그의 믿음은 행위로 나타나야 합니다.",
+            "하나님께서 애굽에서 이스라엘 백성을 살리셨듯이, 이스라엘은 여리고에 멸망이 임할 때 라합과 그녀의 가족을 구해야 했습니다.",
+            "넷째 날 - 충돌하는 가치들",
+            "기브온 사람들은 이스라엘과 조약을 맺기로 결정했습니다.",
+            "기브온 사람들의 말은 라합의 말과 유사했습니다. 두 경우 모두 이스라엘의 하나님의 권능을 인정했습니다.",
+            "모세의 율법은 하나님의 뜻을 묻는 규정을 제시했지만, 여호수아는 주님의 뜻을 물지 않았습니다.",
+            "신정 정치의 지도자, 나아가 모든 그리스도인 지도자의 근본적인 의무는 하나님의 뜻을 구하는 것입니다.",
+            "다섯째 날 - 놀라운 은혜",
+            "여호수아의 결정은 기브온 사람들을 향한 저주를 축복의 가능성으로 바꾸었습니다.",
+            "이후 기브온 사람들은 예루살렘 재건에 동참했습니다. 이는 오직 하나님의 은혜 때문에 가능했습니다.",
+            "하나님의 궁극적인 목적은 죄인들을 벌하는 것이 아니며 그들이 회개하는 것을 보고 자비를 베푸시는 것입니다.",
+            "특별 간증 - 의성 산불과 놀라운 은혜",
+            "2025년 3월 21일, 봄 심방을 가던 중 교회 뒤편 야산에서 연기가 피어올랐습니다.",
+            "의성 산불은 2주가 넘게 번져 큰 피해를 입혔습니다. 다행히 인명 피해는 없었지만 집과 일터를 잃게 되었습니다.",
+            "성도들이 눈물 흘리고 망연자실해 있는 모습을 볼 때면 마냥 함께 울고 싶었습니다.",
+            "그러나 주께서 재난으로 울고 있는 자녀들에게 다시 기쁨의 눈물을 흘리게 해주시리라 믿었습니다.",
+            "성경의 역사는 '전화위복' - 늘 역전하게 하시는 하나님이기에 더 큰 은혜를 주실 것을 믿었습니다.",
+            "삼육대학교에서 90명의 봉사대가 와서 의성서부교회가 숙박 장소가 되었습니다.",
+            "'당장은 피곤하고 힘들지만 주께서 반드시 우리 교회에 복을 주실 것을 믿습니다.'",
+            "성도들은 교회를 내어주며 협력할 수 있어서 감사하다 했습니다.",
+            "매우 고통스런 시간이었지만 주님은 재난을 통해 만나지 못했던 영혼들을 만나게 해주셨습니다.",
+            "더 놀랍게 주님은 영혼들이 우리 교회를 알게 하시고 교회로 나오게 이끄셨습니다.",
+            "이 일을 통해 모두는 전화위복의 하나님, 역전의 하나님을 경험하게 되었습니다.",
+            "교회는 5명의 새로운 영혼을 달라고 기도했고, 주님은 생각지도 못한 방법으로 기도를 들어주셨습니다.",
+            "비록 아픔이 있지만 영혼들을 만나고 교회의 진정한 행복이 무엇인지 알게 해주신 하나님께 감사드립니다.",
+            "결론: 하나님은 실패한 이스라엘에게 다시 기회를 주셔서 가나안을 유업으로 주셨습니다.",
+            "은혜는 자격이 없는 이에게 기회를 주는 것입니다.",
+            "주님은 라합에게 다윗의 혈통까지 들어가는 놀라운 특권을 주셨습니다.",
+            "라합은 예수님의 족보에 등장합니다. 여리고의 창녀였던 그녀가 메시아의 조상이 되었습니다.",
+            "진실하게 믿음으로 하나님께 나아가는 이들은 놀라운 은혜를 경험할 것입니다.",
+            "하나님은 국적이나 인종, 계급에 따른 어떠한 차별도 인정하지 않으십니다.",
+            "하나님의 사랑은 너무나 넓고, 깊고, 충만하여 어디든지 뚫고 들어갑니다.",
+            "TMI 실천: 쓰레기를 주우세요. 누군가에게 성경을 가르쳐 주세요. 노약자에게 자리를 양보하세요.",
+            "오늘 우리가 배운 놀라운 은혜를 기억하며, 우리도 다른 이들에게 두 번째 기회를 줄 수 있는 사람이 되기를 소망합니다.",
+            "TMI 실천: 고아원을 방문해서 필요한 도움을 주세요. 외출이 어려운 이들을 도와주세요. 더운 날 누군가에게 시원한 음료수를 건네세요."
+        ];
 
-      const chatWrapper = document.getElementById("chat-wrapper");
-      const textContent = document.getElementById("text-content");
-      const nextIndicator = document.getElementById("next-indicator");
-      const nameBox = document.getElementById("name-box");
+        const chatWrapper = document.getElementById('chat-wrapper');
+        const textContent = document.getElementById('text-content');
+        const nextIndicator = document.getElementById('next-indicator');
+        const nameBox = document.getElementById('name-box');
+        
+        let messageIndex = -1; // Start at -1 to show the initial message
 
-      let messageIndex = -1; // Start at -1 to show the initial message
+        function showNextMessage() {
+            messageIndex++;
+            if (messageIndex < sermon.length) {
+                textContent.textContent = sermon[messageIndex];
 
-      function showNextMessage() {
-        messageIndex++;
-        if (messageIndex < sermon.length) {
-          const currentText = sermon[messageIndex];
-          textContent.textContent = currentText;
+                // Change title based on content
+                if (sermon[messageIndex].startsWith("기억절:")) {
+                    nameBox.textContent = "오늘의 기억절";
+                } else if (sermon[messageIndex].startsWith("학습 목표")) {
+                    nameBox.textContent = "학습 목표";
+                } else if (sermon[messageIndex].startsWith("첫째 날") || sermon[messageIndex].startsWith("둘째 날") || sermon[messageIndex].startsWith("셋째 날") || sermon[messageIndex].startsWith("넷째 날") || sermon[messageIndex].startsWith("다섯째 날")) {
+                    nameBox.textContent = sermon[messageIndex];
+                } else if (sermon[messageIndex].startsWith("특별 간증")) {
+                    nameBox.textContent = "특별 간증 - 의성 산불";
+                } else if (sermon[messageIndex].startsWith("결론:")) {
+                    nameBox.textContent = "결론";
+                } else if (sermon[messageIndex].startsWith("TMI 실천:")) {
+                    nameBox.textContent = "TMI 실천하기";
+                } else {
+                    nameBox.textContent = "놀라운 은혜";
+                }
 
-          // Change title based on content
-          if (currentText.startsWith("2025년")) {
-            nameBox.textContent = currentText.split(":")[0]; // "2025년 8월 24일 일요일"
-          } else if (currentText.startsWith("기억절:")) {
-            nameBox.textContent = "오늘의 기억절";
-          } else if (currentText.startsWith("학습 목표")) {
-            nameBox.textContent = "학습 목표";
-          } else if (currentText.startsWith("질문:")) {
-            nameBox.textContent = "함께 생각해보기";
-          } else if (currentText.startsWith("결론:")) {
-            nameBox.textContent = "결론";
-          } else if (currentText.startsWith("TMI 실천:")) {
-            nameBox.textContent = "TMI 실천하기";
-          } else if (currentText.startsWith("<교훈>")) {
-            nameBox.textContent = "오늘의 교훈";
-          } else if (currentText.startsWith("<묵상>")) {
-            nameBox.textContent = "묵상하기";
-          } else if (currentText.startsWith("<적용>")) {
-            nameBox.textContent = "적용하기";
-          } else if (currentText.startsWith("<영감의 교훈>")) {
-            nameBox.textContent = "영감의 교훈";
-          } else if (currentText.startsWith("<기도>")) {
-            nameBox.textContent = "함께 드리는 기도";
-          } else if (currentText.startsWith("함께하는 토의를 위하여")) {
-            nameBox.textContent = "함께하는 토의";
-          } else if (currentText.startsWith("음주, 절도, 그리고 하나님")) {
-            nameBox.textContent = "특별 간증";
-          }
-          // 날짜가 아닌 일반 텍스트의 경우, 이전 제목을 유지하거나 기본 제목 설정
-          else if (!nameBox.textContent.includes("2025년")) {
-            // 이전 제목이 날짜가 아니면 기본값으로 설정
-            if (
-              nameBox.textContent === "오늘의 기억절" ||
-              nameBox.textContent === "학습 목표" ||
-              nameBox.textContent === "함께 생각해보기" ||
-              nameBox.textContent === "결론" ||
-              nameBox.textContent === "TMI 실천하기" ||
-              nameBox.textContent === "오늘의 교훈" ||
-              nameBox.textContent === "묵상하기" ||
-              nameBox.textContent === "적용하기" ||
-              nameBox.textContent === "영감의 교훈" ||
-              nameBox.textContent === "함께 드리는 기도" ||
-              nameBox.textContent === "함께하는 토의" ||
-              nameBox.textContent === "특별 간증" ||
-              nameBox.textContent === "마침"
-            ) {
-              // 이전 카테고리 유지
             } else {
-              nameBox.textContent = "하나님의 법과 공동체";
+                textContent.textContent = "학습이 끝났습니다.";
+                nameBox.textContent = "마침";
+                nextIndicator.style.display = 'none'; // Hide indicator at the end
+                chatWrapper.style.cursor = 'default'; // Change cursor to default
             }
-          }
-        } else {
-          textContent.textContent = "학습이 끝났습니다.";
-          nameBox.textContent = "마침";
-          nextIndicator.style.display = "none"; // Hide indicator at the end
-          chatWrapper.style.cursor = "default"; // Change cursor to default
         }
-      }
 
-      chatWrapper.addEventListener("click", showNextMessage);
+        chatWrapper.addEventListener('click', showNextMessage);
+
     </script>
-  </body>
+</body>
 </html>
