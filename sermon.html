@@ -76,6 +76,164 @@
             to { transform: translate(-30%, 30%) scale(0.9); }
         }
 
+        /* Floating particles effect */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(100, 255, 218, 0.3);
+            pointer-events: none;
+            z-index: 2;
+            animation: float-particle 20s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) {
+            width: 4px;
+            height: 4px;
+            left: 10%;
+            top: 20%;
+            animation-duration: 15s;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            width: 6px;
+            height: 6px;
+            left: 30%;
+            top: 40%;
+            animation-duration: 20s;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(3) {
+            width: 3px;
+            height: 3px;
+            left: 50%;
+            top: 60%;
+            animation-duration: 18s;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(4) {
+            width: 5px;
+            height: 5px;
+            left: 70%;
+            top: 30%;
+            animation-duration: 22s;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(5) {
+            width: 4px;
+            height: 4px;
+            left: 90%;
+            top: 50%;
+            animation-duration: 17s;
+            animation-delay: 3s;
+        }
+
+        .particle:nth-child(6) {
+            width: 3px;
+            height: 3px;
+            left: 15%;
+            top: 70%;
+            animation-duration: 19s;
+            animation-delay: 5s;
+        }
+
+        .particle:nth-child(7) {
+            width: 5px;
+            height: 5px;
+            left: 85%;
+            top: 15%;
+            animation-duration: 21s;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(8) {
+            width: 4px;
+            height: 4px;
+            left: 40%;
+            top: 80%;
+            animation-duration: 16s;
+            animation-delay: 6s;
+        }
+
+        @keyframes float-particle {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            50% {
+                transform: translate(50px, -100px) scale(1.5);
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Sparkle effect */
+        .sparkle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 3;
+            box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.8);
+            animation: twinkle 2s infinite ease-in-out;
+        }
+
+        .sparkle:nth-child(9) {
+            left: 25%;
+            top: 15%;
+            animation-delay: 0.5s;
+            animation-duration: 1.5s;
+        }
+
+        .sparkle:nth-child(10) {
+            left: 60%;
+            top: 25%;
+            animation-delay: 1s;
+            animation-duration: 2s;
+        }
+
+        .sparkle:nth-child(11) {
+            left: 80%;
+            top: 60%;
+            animation-delay: 0.3s;
+            animation-duration: 1.8s;
+        }
+
+        .sparkle:nth-child(12) {
+            left: 20%;
+            top: 75%;
+            animation-delay: 0.7s;
+            animation-duration: 2.2s;
+        }
+
+        .sparkle:nth-child(13) {
+            left: 45%;
+            top: 10%;
+            animation-delay: 1.2s;
+            animation-duration: 1.6s;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
         /* --- Dialogue Panel --- */
         #chat-wrapper {
             position: absolute;
@@ -97,6 +255,33 @@
             flex-direction: column;
             padding: 10px;
             box-sizing: border-box;
+            animation: fade-slide-up 1s ease-out, pulse-glow 3s infinite;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #chat-wrapper:hover {
+            transform: translateX(-50%) scale(1.02);
+            box-shadow: 0 0 40px rgba(100, 255, 218, 0.6);
+        }
+
+        @keyframes fade-slide-up {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 35px rgba(100, 255, 218, 0.5);
+            }
         }
 
         #name-box {
@@ -111,6 +296,34 @@
             font-size: 1.3em;
             font-weight: 700;
             color: var(--border-color);
+            animation: shimmer 4s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #name-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(100, 255, 218, 0.3) 50%,
+                transparent 70%
+            );
+            animation: shimmer-move 3s infinite;
+        }
+
+        @keyframes shimmer-move {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
         }
 
         #text-wrapper {
@@ -126,17 +339,43 @@
             line-height: 1.7;
             text-align: left;
             width: calc(100% - 40px);
+            animation: text-reveal 0.5s ease-out;
+        }
+
+        @keyframes text-reveal {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         #next-indicator {
             font-size: 2.5em;
             color: var(--border-color);
-            animation: blink-arrow 1.5s infinite;
+            animation: blink-bounce 1.5s infinite;
         }
 
-        @keyframes blink-arrow {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        @keyframes blink-bounce {
+            0%, 100% { 
+                opacity: 1;
+                transform: translateX(0);
+            }
+            25% {
+                opacity: 0.6;
+                transform: translateX(5px);
+            }
+            50% { 
+                opacity: 0.3;
+                transform: translateX(0);
+            }
+            75% {
+                opacity: 0.6;
+                transform: translateX(5px);
+            }
         }
 
     </style>
@@ -144,6 +383,19 @@
 <body>
 
     <div id="whole-wrapper">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
         <div id="chat-wrapper">
             <div id="name-box">놀라운 은혜</div>
             <div id="text-wrapper">
@@ -238,10 +490,39 @@
         
         let messageIndex = -1; // Start at -1 to show the initial message
 
+        let isTyping = false;
+
+        function typeText(text, callback) {
+            if (isTyping) return;
+            isTyping = true;
+            textContent.textContent = '';
+            let charIndex = 0;
+            
+            const typeInterval = setInterval(() => {
+                if (charIndex < text.length) {
+                    textContent.textContent += text.charAt(charIndex);
+                    charIndex++;
+                } else {
+                    clearInterval(typeInterval);
+                    isTyping = false;
+                    if (callback) callback();
+                }
+            }, 30); // 30ms per character for smooth typing effect
+        }
+
         function showNextMessage() {
+            if (isTyping) return; // Prevent advancing while typing
+            
             messageIndex++;
             if (messageIndex < sermon.length) {
-                textContent.textContent = sermon[messageIndex];
+                // Trigger re-animation by removing and re-adding the animation class
+                textContent.style.animation = 'none';
+                setTimeout(() => {
+                    textContent.style.animation = '';
+                }, 10);
+
+                // Type the text with animation
+                typeText(sermon[messageIndex]);
 
                 // Change title based on content
                 if (sermon[messageIndex].startsWith("기억절:")) {
@@ -261,10 +542,11 @@
                 }
 
             } else {
-                textContent.textContent = "학습이 끝났습니다.";
-                nameBox.textContent = "마침";
-                nextIndicator.style.display = 'none'; // Hide indicator at the end
-                chatWrapper.style.cursor = 'default'; // Change cursor to default
+                typeText("학습이 끝났습니다.", () => {
+                    nameBox.textContent = "마침";
+                    nextIndicator.style.display = 'none'; // Hide indicator at the end
+                    chatWrapper.style.cursor = 'default'; // Change cursor to default
+                });
             }
         }
 
