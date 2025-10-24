@@ -95,6 +95,8 @@
             color: var(--border-color);
             margin-bottom: 20px;
             box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+            /* A transition for smooth text changes */
+            transition: all 0.3s ease;
         }
 
         #chat-wrapper {
@@ -168,7 +170,8 @@
 
     <div id="whole-wrapper">
         <div id="content-container">
-            <div id="name-box">REBOOT: 두 번째 기회</div>
+            <!-- The default title -->
+            <div id="name-box">THE REAL BATTLEFRONT</div>
             <div id="chat-wrapper">
                 <div id="text-wrapper">
                     <p id="text-content">여기를 클릭하여 시작하세요...</p>
@@ -229,7 +232,7 @@
     
     "외과 의사의 비유 🩺",
     "하나님은 '무한한 사랑'인 동시에 '절대적 공의'이십니다.",
-    "암세포가 온몸으로 퍼지는 것을 막기 위해 암 부위를 도려내는 의사처럼,",
+    "암세포가 온몸으로 퍼지는 것을 막기 위해 암 부위를 도려내는 의사처럼, 하나님은 인류 전체의 구원을 위해, 죄악이라는 '전염병'의 확산을 막으셔야 했습니다.",
     "📖 레위기 18:24-25 - '너희는... 스스로 더럽히지 말라... 그 땅도 더럽히지 말라... 그 땅도 더러워졌으므로 내가 그 악으로 말미암아 벌하고...'",
     "핵심: 하나님은 '악'을 반드시 심판하시는 분이며, 이 땅의 전쟁은 그 '우주적 대쟁투'의 일부입니다.",
 
@@ -250,7 +253,11 @@
     "당신은 문제 앞에서 하나님의 A플랜(완전한 맡김)을 기대하나요, 아니면 일단 내 힘(B플랜)으로 해결하려 하나요?",
     "'가만히 있으라'는 건, '아무것도 하지 말라'가 아니라 '내 능력과 조급함을 멈추고 하나님께 집중하라'는 뜻입니다.",
 
-    "✍️ [혼공 퀘스트]: 오늘 가장 조급하고 걱정되는 문제 1가지를 정하세요. 그 문제를 해결하기 위해 휴대폰을 들거나 누군가에게 연락하기 전, 딱 5분만 멈춰 서서 "하나님, 이 문제의 주도권이 하나님께 있음을 인정합니다. A플랜으로 일해주세요."라고 기도하는 '멈춤의 훈련'을 해보세요.",
+    // --- FIX START ---
+    // The internal double quotes ("하나님...") are now escaped with a backslash (\").
+    // This prevents the string from breaking prematurely and fixes the SyntaxError.
+    "✍️ [혼공 퀘스트]: 오늘 가장 조급하고 걱정되는 문제 1가지를 정하세요. 그 문제를 해결하기 위해 휴대폰을 들거나 누군가에게 연락하기 전, 딱 5분만 멈춰 서서 \"하나님, 이 문제의 주도권이 하나님께 있음을 인정합니다. A플랜으로 일해주세요.\"라고 기도하는 '멈춤의 훈련'을 해보세요.",
+    // --- FIX END ---
 
     // Day 5: 상식 밖의 B플랜 (여호수아 6)
     "다섯째 날: 벽 앞에서 침묵으로 행진하기 🚶‍♂️...",
@@ -310,24 +317,53 @@
         const nameBox = document.getElementById('name-box');
         
         let messageIndex = -1; 
+        let isFirstClick = true;
 
         function showNextMessage() {
-            messageIndex++;
+            if (isFirstClick) {
+                // On the very first click, load the first message
+                // and update the nameBox from "REBOOT..." to the first item's title
+                messageIndex = 0;
+                isFirstClick = false; 
+            } else {
+                messageIndex++;
+            }
+
             if (messageIndex < sermon.length) {
                 const currentText = sermon[messageIndex];
                 const parts = currentText.split(': ');
                 
-                // Update title and content
-                if (parts.length > 1 && (currentText.includes("일: ") || currentText.includes("날: ") || currentText.startsWith("핵심 교훈") || currentText.startsWith("뇌풀기 퀴즈") || currentText.startsWith("인생 퀘스트") || currentText.startsWith("개발자 코멘트") || currentText.startsWith("다함께 기도") || currentText.startsWith("토론 타임") || currentText.startsWith("특별 간증") || currentText.startsWith("결론"))) {
+                // Check for title keywords
+                // This logic identifies strings that should update the top name-box
+                const isTitle = parts.length > 1 && (
+                    currentText.startsWith("THE REAL BATTLEFRONT") ||
+                    currentText.includes("일: ") || 
+                    currentText.includes("날: ") || 
+                    currentText.startsWith("최종 정리") || // Corrected from "결론"
+                    currentText.startsWith("마무리 🎬") ||
+                    // Keep the other original checks just in case
+                    currentText.startsWith("핵심 교훈") || 
+                    currentText.startsWith("뇌풀기 퀴즈") || 
+                    currentText.startsWith("인생 퀘스트") || 
+                    currentText.startsWith("개발자 코멘트") || 
+                    currentText.startsWith("다함께 기도") || 
+                    currentText.startsWith("토론 타임") || 
+                    currentText.startsWith("특별 간증")
+                );
+
+                if (isTitle) {
                     let title = parts[0];
+                    // Add emojis based on title
                     if (title.startsWith("뇌풀기 퀴즈")) title += " 🧠";
                     if (title.startsWith("인생 퀘스트")) title += " ⚔️";
                     if (title.startsWith("개발자 코멘트")) title += " 📜";
                     if (title.startsWith("다함께 기도")) title += " 🙏";
                     if (title.startsWith("토론 타임")) title = "🔥 핫이슈 토론 🔥";
+
                     nameBox.textContent = title;
                     textContent.textContent = parts.slice(1).join(': ');
                 } else {
+                    // Not a title, just update content. nameBox remains.
                     textContent.textContent = currentText;
                 }
                 
@@ -341,9 +377,11 @@
                 chatWrapper.style.cursor = 'default';
             }
         }
-
+        
+        // Start the interaction on the first click
         chatWrapper.addEventListener('click', showNextMessage);
 
     </script>
 </body>
 </html>
+
