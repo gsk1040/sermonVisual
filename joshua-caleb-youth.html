@@ -1,0 +1,58 @@
+<html>
+<head>
+    <style>
+        body {
+            overflow: hidden;
+            background-color: #f0f8ff;
+        }
+        .bee {
+            position: absolute;
+            width: 50px;
+            animation: fly 10s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes fly {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-100px) translateX(100px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 5s infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100px); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Joshua Caleb Youth Event</h1>
+    <p>Join us for an engaging experience!</p>
+    <script>
+        // Create floating particles
+        for (let i = 0; i < 50; i++) {
+            let particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.animationDuration = Math.random() * 3 + 2 + 's';
+            particle.style.opacity = Math.random();
+            document.body.appendChild(particle);
+        }
+        // Create flying bee emojis
+        for (let i = 0; i < 5; i++) {
+            let bee = document.createElement('img');
+            bee.src = 'https://emojipedia-us.s3.amazonaws.com/source/skype/289/bee_1f41d.png';
+            bee.className = 'bee';
+            bee.style.left = Math.random() * window.innerWidth + 'px';
+            document.body.appendChild(bee);
+            // Set random animation duration
+            bee.style.animationDuration = Math.random() * 5 + 5 + 's';
+        }
+    </script>
+</body>
+</html>
