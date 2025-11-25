@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>믿음의 거인 - 여호수아와 갈렙 | 청년 안식일학교</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dialogue-bg: rgba(15, 23, 42, 0.92);
+            --name-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --border-color: #38bdf8;
+            --accent-caleb: #fbbf24;
+            --accent-joshua: #34d399;
+            --accent-question: #a78bfa;
+            --font-main: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: var(--font-main);
+            background-color: #0f172a;
+            color: var(--text-color);
+            overflow: hidden;
+        }
+
+        #whole-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+            overflow: hidden;
+            transition: background 1s ease;
+        }
+
+        #whole-wrapper.desert {
+            background: linear-gradient(135deg, #78350f 0%, #b45309 50%, #92400e 100%);
+        }
+
+        #whole-wrapper.mountain {
+            background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #065f46 100%);
+        }
+
+        #whole-wrapper.night {
+            background: linear-gradient(135deg, #0c0a09 0%, #1c1917 50%, #292524 100%);
+        }
+
+        #whole-wrapper.promise {
+            background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 50%, #7c3aed 100%);
+        }
+
+        #whole-wrapper.victory {
+            background: linear-gradient(135deg, #0369a1 0%, #0891b2 50%, #06b6d4 100%);
+        }
+
+        /* Animated background effect */
+        #whole-wrapper::before, #whole-wrapper::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            z-index: 1;
+            filter: blur(80px);
+        }
+
+        #whole-wrapper::before {
+            width: 70vmax;
+            height: 70vmax;
+            background: radial-gradient(circle, #38bdf8 0%, rgba(56,189,248,0) 60%);
+            animation: move-glow 20s infinite alternate ease-in-out;
+        }
+
+        #whole-wrapper::after {
+            width: 50vmax;
+            height: 50vmax;
+            background: radial-gradient(circle, #a78bfa 0%, rgba(167,139,250,0) 60%);
+            animation: move-glow-2 25s infinite alternate ease-in-out;
+        }
+
+        @keyframes move-glow {
+            from { transform: translate(-30%, -30%) scale(0.8); }
+            to { transform: translate(30%, 30%) scale(1.3); }
+        }
+        @keyframes move-glow-2 {
+            from { transform: translate(40%, -20%) scale(1.1); }
+            to { transform: translate(-40%, 40%) scale(0.9); }
+        }
+
+        /* Character Display */
+        #character-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -60%);
+            font-size: 120px;
+            z-index: 5;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-shadow: 0 0 60px rgba(255,255,255,0.3);
+        }
+
+        #character-display.visible {
+            opacity: 1;
+            transform: translate(-50%, -65%);
+        }
+
+        /* Scene Title */
+        #scene-indicator {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #scene-indicator.visible {
+            opacity: 1;
+        }
+
+        /* Progress Bar */
+        #progress-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            z-index: 20;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--border-color), var(--accent-question));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Dialogue Panel */
+        #chat-wrapper {
+            position: absolute;
+            bottom: 4vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92%;
+            max-width: 800px;
+            min-height: 180px;
+            background-color: var(--dialogue-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.2);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            z-index: 10;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 24px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #chat-wrapper.caleb {
+            border-color: var(--accent-caleb);
+            box-shadow: 0 0 40px rgba(251, 191, 36, 0.2);
+        }
+
+        #chat-wrapper.joshua {
+            border-color: var(--accent-joshua);
+            box-shadow: 0 0 40px rgba(52, 211, 153, 0.2);
+        }
+
+        #chat-wrapper.question {
+            border-color: var(--accent-question);
+            box-shadow: 0 0 40px rgba(167, 139, 250, 0.2);
+        }
+
+        #name-box {
+            position: absolute;
+            top: -18px;
+            left: 24px;
+            background-color: var(--name-bg);
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 2px solid var(--border-color);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        #name-box.caleb {
+            border-color: var(--accent-caleb);
+            color: var(--accent-caleb);
+        }
+
+        #name-box.joshua {
+            border-color: var(--accent-joshua);
+            color: var(--accent-joshua);
+        }
+
+        #name-box.question {
+            border-color: var(--accent-question);
+            color: var(--accent-question);
+        }
+
+        #text-wrapper {
+            flex-grow: 1;
+            padding: 16px 0 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        #text-content {
+            font-size: 18px;
+            line-height: 1.8;
+            text-align: left;
+            flex: 1;
+            word-break: keep-all;
+        }
+
+        .highlight {
+            color: var(--border-color);
+            font-weight: 700;
+        }
+
+        .verse {
+            color: var(--accent-question);
+            font-style: italic;
+        }
+
+        .emphasis {
+            color: var(--accent-caleb);
+            font-weight: 700;
+        }
+
+        #next-indicator {
+            font-size: 24px;
+            color: var(--border-color);
+            animation: blink-arrow 1.5s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes blink-arrow {
+            0%, 100% { opacity: 1; transform: translateX(0); }
+            50% { opacity: 0.4; transform: translateX(5px); }
+        }
+
+        /* Start Screen */
+        #start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        #start-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .lesson-tag {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 16px;
+        }
+
+        #start-screen h1 {
+            font-size: 36px;
+            font-weight: 900;
+            margin: 0 0 8px;
+            background: linear-gradient(135deg, #38bdf8, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #start-screen .subtitle {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 40px;
+        }
+
+        #start-btn {
+            background: linear-gradient(135deg, #38bdf8, #a78bfa);
+            border: none;
+            padding: 16px 48px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(56, 189, 248, 0.4);
+        }
+
+        #memory-verse-box {
+            position: absolute;
+            bottom: 60px;
+            text-align: center;
+            padding: 0 32px;
+            max-width: 500px;
+        }
+
+        #memory-verse-box .label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 12px;
+        }
+
+        #memory-verse-box .verse-text {
+            font-size: 14px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            #text-content {
+                font-size: 16px;
+            }
+            #start-screen h1 {
+                font-size: 28px;
+            }
+            #character-display {
+                font-size: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Start Screen -->
+    <div id="start-screen">
+        <p class="lesson-tag">2024년 4분기 제8과 · 11월 23일 - 30일</p>
+        <h1>믿음의 거인</h1>
+        <p class="subtitle">여호수아와 갈렙 — 청년 에디션</p>
+        <button id="start-btn">시작하기 →</button>
+        <div id="memory-verse-box">
+            <p class="label">📖 이번 주 기억절</p>
+            <p class="verse-text">
+                "하나님의 말씀을 너희에게 일러 주고 너희를 인도하던 자들을 생각하며<br>
+                그들의 행실의 결말을 주의하여 보고 그들의 믿음을 본받으라"<br>
+                — 히브리서 13:7
+            </p>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div id="whole-wrapper">
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+
+        <p id="scene-indicator"></p>
+        <div id="character-display"></div>
+
+        <div id="chat-wrapper">
+            <div id="name-box">시작</div>
+            <div id="text-wrapper">
+                <p id="text-content">화면을 탭하여 시작하세요...</p>
+                <div id="next-indicator">▶</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 스크립트 데이터 구조 개선
+        const sermon = [
+            // ===== INTRO =====
+            {
+                speaker: "📍 오늘의 이야기",
+                text: "지금으로부터 약 3,400년 전, 이스라엘 백성들은 <span class='highlight'>가나안 땅</span> 앞에 서 있었어.",
+                scene: "night",
+                type: "narrator"
+            },
+            {
+                speaker: "📍 오늘의 이야기",
+                text: "하나님이 약속하신 땅. 젖과 꿀이 흐르는 땅.<br>하지만 그곳에 들어가려면 <span class='highlight'>용기</span>가 필요했지.",
+                scene: "night",
+                type: "narrator"
+            },
+            {
+                speaker: "💭 잠깐, 생각해봐",
+                text: "너라면 어땠을 것 같아?<br>꿈꿔왔던 목표가 눈앞인데, 거대한 장애물이 보인다면?",
+                scene: "night",
+                type: "question"
+            },
+
+            // ===== SCENE 1: 정탐꾼 =====
+            {
+                speaker: "SCENE 1",
+                text: "12명의 정탐꾼",
+                scene: "desert",
+                type: "scene-title",
+                sceneLabel: "SCENE 1: 12명의 정탐꾼"
+            },
+            {
+                speaker: "내레이터",
+                text: "모세는 각 지파에서 한 명씩, <span class='highlight'>12명의 정탐꾼</span>을 가나안에 보냈어.",
+                scene: "desert",
+                type: "narrator"
+            },
+            {
+                speaker: "🧔 갈렙",
+                text: "여호수아, 저기 봐! 포도가 엄청 크다!<br>한 송이를 두 사람이 막대기로 메고 가야 할 정도야!",
+                scene: "desert",
+                type: "caleb",
+                emoji: "🧔"
+            },
+            {
+                speaker: "⚔️ 여호수아",
+                text: "하나님이 약속하신 땅이 정말 맞아.<br>이 땅은 진짜 <span class='highlight'>복된 땅</span>이야.",
+                scene: "desert",
+                type: "joshua",
+                emoji: "⚔️"
+            },
+            {
+                speaker: "😰 다른 10명",
+                text: "\"저기 사는 사람들 봤어?! 완전 <span class='emphasis'>거인</span>들이야!<br>우리가 메뚜기처럼 보일 정도라고... 절대 못 이겨.\"",
+                scene: "desert",
+                type: "narrator",
+                emoji: "😰"
+            },
+            {
+                speaker: "📖 민수기 13:32-33",
+                text: "<span class='verse'>\"그 땅 거민은 신장이 장대한 자들이요...<br>우리는 스스로 보기에도 메뚜기 같으니\"</span>",
+                scene: "desert",
+                type: "narrator"
+            },
+
+            // ===== SCENE 2: 갈렙의 외침 =====
+            {
+                speaker: "SCENE 2",
+                text: "두려움 vs 믿음",
+                scene: "mountain",
+                type: "scene-title",
+                sceneLabel: "SCENE 2: 두려움 vs 믿음"
+            },
+            {
+                speaker: "🧔 갈렙",
+                text: "잠깐, 다들 뭐라는 거야?!<br>우리가 싸우는 게 아니잖아. <span class='highlight'>하나님이 함께하시는데!</span>",
+                scene: "mountain",
+                type: "caleb",
+                emoji: "🧔"
+            },
+            {
+                speaker: "📖 민수기 13:30",
+                text: "<span class='verse'>\"우리가 곧 올라가서 그 땅을 취하자.<br>능히 이기리라!\"</span>",
+                scene: "mountain",
+                type: "caleb"
+            },
+            {
+                speaker: "⚔️ 여호수아",
+                text: "갈렙 말이 맞아.<br>여호와께서 우리를 기뻐하시면, 우리를 그 땅으로 인도하시고 주실 거야.",
+                scene: "mountain",
+                type: "joshua",
+                emoji: "⚔️"
+            },
+            {
+                speaker: "💭 생각해봐",
+                text: "<span class='emphasis'>10명 vs 2명.</span><br><br>다수가 \"안 돼\"라고 할 때, 너는 어떤 선택을 할 수 있을까?",
+                scene: "mountain",
+                type: "question"
+            },
+            {
+                speaker: "💡 포인트",
+                text: "갈렙과 여호수아는 <span class='highlight'>\"다른 마음\"</span>을 가졌어. (민 14:24)<br><br>같은 상황, 다른 해석. 그들은 거인이 아닌 <span class='emphasis'>하나님</span>을 봤어.",
+                scene: "mountain",
+                type: "narrator"
+            },
+
+            // ===== SCENE 3: 40년의 기다림 =====
+            {
+                speaker: "SCENE 3",
+                text: "40년의 인내",
+                scene: "night",
+                type: "scene-title",
+                sceneLabel: "SCENE 3: 40년의 인내"
+            },
+            {
+                speaker: "내레이터",
+                text: "결국 이스라엘 백성들은 10명의 말을 따랐어.<br>그리고 그 결과는...",
+                scene: "night",
+                type: "narrator"
+            },
+            {
+                speaker: "내레이터",
+                text: "<span class='emphasis'>40년간의 광야 생활.</span><br><br>믿음 없는 세대가 모두 지나갈 때까지...",
+                scene: "night",
+                type: "narrator"
+            },
+            {
+                speaker: "내레이터",
+                text: "갈렙의 나이, 45세에서... <span class='highlight'>85세</span>가 됐어.<br><br>무려 40년. 하지만 그의 믿음은 변하지 않았어.",
+                scene: "night",
+                type: "narrator"
+            },
+            {
+                speaker: "💭 잠깐",
+                text: "40년... 네 나이의 두 배 이상일 수도 있어.<br><br>그 긴 시간 동안 믿음을 지킨다는 게 어떤 느낌일까?",
+                scene: "night",
+                type: "question"
+            },
+
+            // ===== SCENE 4: 85세 갈렙 =====
+            {
+                speaker: "SCENE 4",
+                text: "나이 들지 않는 믿음",
+                scene: "mountain",
+                type: "scene-title",
+                sceneLabel: "SCENE 4: 85세 갈렙"
+            },
+            {
+                speaker: "🧔 갈렙 (85세)",
+                text: "여호수아, 나 기억나?<br>40년 전 그날, 내가 한 말 기억해?",
+                scene: "mountain",
+                type: "caleb",
+                emoji: "🧔"
+            },
+            {
+                speaker: "🧔 갈렙 (85세)",
+                text: "보라, 나 아직도 <span class='highlight'>그때만큼 강해!</span><br><br>싸우러 나가든 들어오든, 그때의 힘 그대로야.",
+                scene: "mountain",
+                type: "caleb",
+                emoji: "🧔"
+            },
+            {
+                speaker: "📖 여호수아 14:12",
+                text: "<span class='verse'>\"그 산지를 내게 주소서.<br>아낙 사람(거인)이 거기 있다 할지라도<br>여호와께서 함께하시면 내가 쫓아내리라!\"</span>",
+                scene: "mountain",
+                type: "caleb"
+            },
+            {
+                speaker: "💡 포인트",
+                text: "85세에 <span class='emphasis'>거인들의 땅</span>을 달라고 했어.<br><br>쉬운 땅 말고, 가장 어려운 곳을. 이게 갈렙이야.",
+                scene: "mountain",
+                type: "narrator"
+            },
+
+            // ===== SCENE 5: 여호수아의 리더십 =====
+            {
+                speaker: "SCENE 5",
+                text: "진짜 리더십",
+                scene: "promise",
+                type: "scene-title",
+                sceneLabel: "SCENE 5: 여호수아의 겸손"
+            },
+            {
+                speaker: "내레이터",
+                text: "여호수아는 모세의 뒤를 이어<br>이스라엘의 <span class='highlight'>지도자</span>가 됐어.",
+                scene: "promise",
+                type: "narrator"
+            },
+            {
+                speaker: "내레이터",
+                text: "가나안 땅을 정복하고, 각 지파에게 땅을 나눠줬지.<br><br>그런데 여호수아가 자기 땅을 받은 건...",
+                scene: "promise",
+                type: "narrator"
+            },
+            {
+                speaker: "📖 여호수아 19:49-50",
+                text: "<span class='highlight'>가장 마지막</span>이었어.<br><br>리더로서 먼저 챙길 수 있었는데, 그러지 않았어.",
+                scene: "promise",
+                type: "narrator"
+            },
+            {
+                speaker: "⚔️ 여호수아",
+                text: "나는 하나님의 종일 뿐이야.<br><br>중요한 건 내 몫이 아니라,<br><span class='highlight'>하나님의 약속이 이뤄지는 것</span>이니까.",
+                scene: "promise",
+                type: "joshua",
+                emoji: "⚔️"
+            },
+            {
+                speaker: "💭 생각해봐",
+                text: "\"먼저 챙기는 리더\" vs \"마지막에 받는 리더\"<br><br>너는 어떤 리더를 존경해?",
+                scene: "promise",
+                type: "question"
+            },
+
+            // ===== APPLICATION =====
+            {
+                speaker: "YOUR TURN",
+                text: "오늘, 너에게",
+                scene: "victory",
+                type: "scene-title",
+                sceneLabel: "YOUR STORY"
+            },
+            {
+                speaker: "📌 Lesson 1",
+                text: "<span class='highlight'>\"다수의 의견 ≠ 정답\"</span><br><br>10명이 \"안 돼\"라고 해도,<br>하나님이 \"돼\"라고 하시면 그게 답이야.",
+                scene: "victory",
+                type: "caleb"
+            },
+            {
+                speaker: "📌 Lesson 2",
+                text: "<span class='highlight'>\"기다림도 믿음이야\"</span><br><br>갈렙은 40년을 기다렸어.<br>때로는 기다림 자체가 신앙 훈련이야.",
+                scene: "victory",
+                type: "narrator"
+            },
+            {
+                speaker: "📌 Lesson 3",
+                text: "<span class='highlight'>\"진짜 리더는 마지막에 받는다\"</span><br><br>여호수아는 자기 몫을 맨 마지막에 챙겼어.<br>이게 섬김의 리더십이야.",
+                scene: "victory",
+                type: "joshua"
+            },
+            {
+                speaker: "📌 Lesson 4",
+                text: "<span class='highlight'>\"쉬운 길 대신 하나님의 길\"</span><br><br>갈렙은 85세에 거인의 땅을 원했어.<br>안전한 선택 대신, 믿음의 도전을.",
+                scene: "victory",
+                type: "caleb"
+            },
+
+            // ===== CHALLENGE =====
+            {
+                speaker: "✨ 이번 주 도전",
+                text: "네 삶에서 <span class='emphasis'>\"두려움 대신 믿음\"</span>을 선택할 순간이 온다면—<br><br>갈렙처럼, 여호수아처럼 선택해보는 건 어때?",
+                scene: "victory",
+                type: "question"
+            },
+            {
+                speaker: "🙏 TMI 실천",
+                text: "• 포기하고 싶은 일에 한 번 더 도전해보기<br>• 소수의 옳은 의견을 용기있게 지지하기<br>• 나보다 다른 사람을 먼저 챙기기",
+                scene: "victory",
+                type: "narrator"
+            },
+
+            // ===== ENDING =====
+            {
+                speaker: "📖 기억절",
+                text: "<span class='verse'>\"하나님의 말씀을 너희에게 일러 주고<br>너희를 인도하던 자들을 생각하며<br>그들의 행실의 결말을 주의하여 보고<br>그들의 믿음을 본받으라\"</span><br><br>— 히브리서 13:7",
+                scene: "promise",
+                type: "narrator"
+            },
+            {
+                speaker: "🌅",
+                text: "오늘도 믿음으로 한 걸음.<br><br><span class='highlight'>Happy Sabbath!</span> ✨",
+                scene: "promise",
+                type: "narrator",
+                isEnd: true
+            }
+        ];
+
+        // DOM Elements
+        const startScreen = document.getElementById('start-screen');
+        const startBtn = document.getElementById('start-btn');
+        const wholeWrapper = document.getElementById('whole-wrapper');
+        const chatWrapper = document.getElementById('chat-wrapper');
+        const nameBox = document.getElementById('name-box');
+        const textContent = document.getElementById('text-content');
+        const nextIndicator = document.getElementById('next-indicator');
+        const sceneIndicator = document.getElementById('scene-indicator');
+        const characterDisplay = document.getElementById('character-display');
+        const progressBar = document.getElementById('progress-bar');
+
+        let messageIndex = -1;
+
+        // Start Game
+        startBtn.addEventListener('click', () => {
+            startScreen.classList.add('hidden');
+            showNextMessage();
+        });
+
+        // Click to advance
+        chatWrapper.addEventListener('click', showNextMessage);
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'Enter') {
+                if (!startScreen.classList.contains('hidden')) {
+                    startScreen.classList.add('hidden');
+                }
+                showNextMessage();
+            }
+        });
+
+        function showNextMessage() {
+            messageIndex++;
+
+            if (messageIndex < sermon.length) {
+                const current = sermon[messageIndex];
+
+                // Update text
+                textContent.innerHTML = current.text;
+                nameBox.textContent = current.speaker;
+
+                // Update styling based on type
+                chatWrapper.className = '';
+                nameBox.className = '';
+
+                if (current.type === 'caleb') {
+                    chatWrapper.classList.add('caleb');
+                    nameBox.classList.add('caleb');
+                } else if (current.type === 'joshua') {
+                    chatWrapper.classList.add('joshua');
+                    nameBox.classList.add('joshua');
+                } else if (current.type === 'question') {
+                    chatWrapper.classList.add('question');
+                    nameBox.classList.add('question');
+                }
+
+                // Update background
+                wholeWrapper.className = '';
+                if (current.scene) {
+                    wholeWrapper.classList.add(current.scene);
+                }
+
+                // Update scene indicator
+                if (current.sceneLabel) {
+                    sceneIndicator.textContent = current.sceneLabel;
+                    sceneIndicator.classList.add('visible');
+                } else if (current.type !== 'scene-title') {
+                    // Keep previous scene label
+                }
+
+                // Update character emoji
+                if (current.emoji) {
+                    characterDisplay.textContent = current.emoji;
+                    characterDisplay.classList.add('visible');
+                } else {
+                    characterDisplay.classList.remove('visible');
+                }
+
+                // Update progress
+                const progress = ((messageIndex + 1) / sermon.length) * 100;
+                progressBar.style.width = `${progress}%`;
+
+                // Update indicator for end
+                if (current.isEnd) {
+                    nextIndicator.textContent = '↺';
+                } else {
+                    nextIndicator.textContent = '▶';
+                }
+
+            } else {
+                // Reset to start
+                messageIndex = -1;
+                startScreen.classList.remove('hidden');
+                progressBar.style.width = '0%';
+                sceneIndicator.classList.remove('visible');
+                characterDisplay.classList.remove('visible');
+            }
+        }
+    </script>
+</body>
+</html>
